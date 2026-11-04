@@ -9,7 +9,9 @@ export function highlightEvidence(text: string, evidence: string[]): TextSegment
   const lower = text.toLowerCase();
   for (const phrase of evidence) {
     if (!phrase) continue;
-    const idx = lower.indexOf(phrase.toLowerCase());
+    // Evidence should be an exact substring; fall back to a case-insensitive match.
+    let idx = text.indexOf(phrase);
+    if (idx < 0) idx = lower.indexOf(phrase.toLowerCase());
     if (idx >= 0) ranges.push([idx, idx + phrase.length]);
   }
   ranges.sort((a, b) => a[0] - b[0]);

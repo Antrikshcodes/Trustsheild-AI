@@ -38,21 +38,23 @@ export function HowItWorks() {
             align="center"
           />
         </Reveal>
-        <ol className="relative mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="relative mt-14">
           <div
             aria-hidden
             className="absolute top-7 right-[12%] left-[12%] hidden h-px bg-gradient-to-r from-brand-200 via-violet-100 to-brand-200 lg:block"
           />
-          {STEPS.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 80} className="relative rounded-2xl border border-line bg-white p-6 shadow-card">
-              <span className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-500 font-display text-sm font-semibold text-white">
-                {s.n}
-              </span>
-              <p className="mt-5 font-display text-lg font-semibold text-ink">{s.title}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
-            </Reveal>
-          ))}
-        </ol>
+          <ol className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {STEPS.map((s, i) => (
+              <Reveal as="li" key={s.n} delay={i * 80} className="relative rounded-2xl border border-line bg-white p-6 shadow-card">
+                <span className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-500 font-display text-sm font-semibold text-white">
+                  {s.n}
+                </span>
+                <p className="mt-5 font-display text-lg font-semibold text-ink">{s.title}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
       </Container>
     </section>
   );

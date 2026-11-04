@@ -32,8 +32,8 @@ TrustLayer-AI/
 
 ## Run the frontend locally
 ```bash
-git clone https://github.com/antrikshcodes/TrustLayer-AI.git
-cd TrustLayer-AI/frontend
+git clone https://github.com/Antrikshcodes/Trustsheild-AI.git
+cd Trustsheild-AI/frontend
 npm install
 cp .env.example .env.local     # optional — defaults to demo mode
 npm run dev

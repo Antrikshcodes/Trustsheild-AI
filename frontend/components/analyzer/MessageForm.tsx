@@ -25,24 +25,21 @@ interface MessageFormProps {
 
 export function MessageForm({ values, onChange, onSubmit, onClear, loading }: MessageFormProps) {
   const ids = { message: useId(), sender: useId(), msgErr: useId(), senderErr: useId(), count: useId() };
-  const [errors, setErrors] = useState<FormErrors>({});
+  // Errors are derived from the current values once the user has tried to submit, so they
+  // stay in sync when values change from outside the form (e.g. picking an example).
   const [touched, setTouched] = useState(false);
+  const errors: FormErrors = touched ? validateAnalyzeInput(values.message, values.sender) : {};
 
   const length = values.message.length;
   const over = length > MESSAGE_MAX_LENGTH;
   const sensitive = detectSensitiveContent(values.message);
 
-  const update = (patch: Partial<MessageFormValues>) => {
-    const next = { ...values, ...patch };
-    onChange(next);
-    if (touched) setErrors(validateAnalyzeInput(next.message, next.sender));
-  };
+  const update = (patch: Partial<MessageFormValues>) => onChange({ ...values, ...patch });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setTouched(true);
     const errs = validateAnalyzeInput(values.message, values.sender);
-    setErrors(errs);
     if (errs.message || errs.sender) {
       document.getElementById(errs.message ? ids.message : ids.sender)?.focus();
       return;
@@ -140,7 +137,6 @@ export function MessageForm({ values, onChange, onSubmit, onClear, loading }: Me
             type="button"
             variant="ghost"
             onClick={() => {
-              setErrors({});
               setTouched(false);
               onClear();
             }}

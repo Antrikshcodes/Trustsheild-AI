@@ -22,6 +22,30 @@ Owner: Kushagri
 | No console errors or warnings | ✅ |
 | `npm run check` (lint + typecheck + build) passes with 0 warnings | ✅ |
 
+## Phase 1 QA audit (2026-11-04, Chrome via in-app browser, dev + production build)
+| Check | Result |
+|---|---|
+| All 14 in-page links resolve to an existing section id | ✅ |
+| Empty / whitespace-only / < 20 chars → correct error, focus moves to the textarea | ✅ |
+| Error clears after choosing an example (was stuck) | ✅ after fix |
+| 5,001 chars → red counter, error on submit; exactly 5,000 accepted; 207,000-char paste stays responsive (~33 ms) | ✅ |
+| Trailing whitespace past 5,000 (trimmed ≤ 5,000) accepted | ✅ after fix |
+| Fictional legit interview invite / stipend notice → Low, 0 findings | ✅ |
+| OTP request, "pay Rs. 2,500", injection + OTP, APK download → High with quoted, highlighted evidence | ✅ |
+| "fee of 2500 rupees", "transfer the training charges" → High | ✅ after fix (was Low) |
+| Threat text ("offer will be cancelled", "legal action") → Medium | ✅ after fix (was Low) |
+| Multiline message keeps line breaks in the highlighted view | ✅ |
+| 5 rapid clicks + 2 form submits → exactly 1 analysis | ✅ after fix (was 5) |
+| `?demoError=1` → error card, focus on it, "Try again" re-runs | ✅ |
+| Clear resets form and result | ✅ |
+| Privacy warning for OTP-like and card-like numbers; none for a phone number | ✅ |
+| No horizontal scroll at 375, 768, 1440 px; tablet navbar no longer wraps | ✅ after fix |
+| Mobile menu opens, closes on Esc, focus stays on the toggle | ✅ |
+| No console errors on fresh load and through the flows above | ✅ |
+| `npm ci` + `npm run check` + `npm run format:check`; `next start` serves `/` (200) and 404 page | ✅ |
+| Automated unit / e2e tests | ❌ none exist yet (no `npm test` script) |
+| Screen-reader pass (VoiceOver / NVDA) | Not run — needs a manual session |
+
 ## Later phases
 | Group | Cases | Pass condition |
 |---|---|---|

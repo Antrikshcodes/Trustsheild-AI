@@ -13,7 +13,7 @@ export function validateAnalyzeInput(message: string, sender: string): FormError
     errors.message = "Paste the message you want to check.";
   } else if (trimmed.length < MESSAGE_MIN_LENGTH) {
     errors.message = `That’s too short to analyse. Paste at least ${MESSAGE_MIN_LENGTH} characters of the message.`;
-  } else if (message.length > MESSAGE_MAX_LENGTH) {
+  } else if (trimmed.length > MESSAGE_MAX_LENGTH) {
     errors.message = `Messages can be up to ${MESSAGE_MAX_LENGTH.toLocaleString("en-IN")} characters. Trim signatures or quoted replies.`;
   }
 

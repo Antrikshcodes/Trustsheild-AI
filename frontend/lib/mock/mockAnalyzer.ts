@@ -38,8 +38,16 @@ const DEMO_RULES: DemoRule[] = [
   {
     type: "upfront_payment",
     severity: "strong",
-    pattern:
-      /(?:pay|deposit|fee|charges?|jama|transfer)[^.\n]{0,40}(?:₹|rs\.?|inr)\s?[\d,]+|(?:₹|rs\.?|inr)\s?[\d,]+[^.\n]{0,40}(?:fee|pay|deposit|jama|charges?)/i,
+    pattern: new RegExp(
+      [
+        // A payment word near an amount: "pay Rs. 2,500", "₹1,499 fee jama karo", "fee of 2500 rupees".
+        String.raw`(?:pay|deposit|fee|charges?|jama|transfer)[^.\n]{0,40}(?:(?:₹|rs\.?|inr)\s?\d[\d,]*|\d[\d,]*\s?(?:rupees|rs\b|inr\b|\/-))`,
+        String.raw`(?:₹|rs\.?|inr)\s?\d[\d,]*[^.\n]{0,40}(?:fee|pay|deposit|jama|charges?)`,
+        // A payment verb aimed at a named fee, with or without an amount: "transfer the training charges".
+        String.raw`(?:pay|deposit|transfer|jama)[^.\n]{0,25}\b(?:registration|training|verification|security|processing|onboarding|joining|refundable) (?:fees?|charges?|deposit|amount)\b`,
+      ].join("|"),
+      "i",
+    ),
     explanation: "Legitimate employers do not charge students to apply, verify documents or confirm an offer.",
   },
   {
@@ -53,8 +61,9 @@ const DEMO_RULES: DemoRule[] = [
     type: "urgency",
     severity: "supporting",
     pattern:
-      /within \d+ (?:minutes?|mins?|hours?|hrs?)|\bimmediately\b|\burgent(?:ly)?\b|expires? (?:today|tonight|in \d+)|last chance|\bturant\b|aaj hi/i,
-    explanation: "Pressure to act fast is a common tactic to stop you from checking. Real offers give you time to verify.",
+      /within \d+ (?:minutes?|mins?|hours?|hrs?)|\bimmediately\b|\burgent(?:ly)?\b|expires? (?:today|tonight|in \d+)|last chance|\bturant\b|aaj hi|(?:offer|selection|seat|candidature)[^.\n]{0,20}\b(?:will|shall) be (?:cancell?ed|revoked|withdrawn)|lose (?:the|your) (?:offer|seat|selection)|legal action|black-?listed|final (?:notice|warning)/i,
+    explanation:
+      "Pressure to act fast, or threats like cancelling your offer or taking legal action, is a common tactic to stop you from checking. Real offers give you time to verify.",
   },
   {
     type: "suspicious_link",

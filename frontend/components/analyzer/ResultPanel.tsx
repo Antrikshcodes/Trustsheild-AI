@@ -164,8 +164,18 @@ export function ResultLoading() {
 }
 
 export function ResultError({ message, onRetry }: { message: string; onRetry: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  // The submit button is disabled while loading, which drops focus to <body>; bring it back here.
+  useEffect(() => {
+    ref.current?.focus({ preventScroll: true });
+  }, []);
   return (
-    <div role="alert" className="rounded-3xl border border-risk-high/25 bg-white p-7 shadow-card">
+    <div
+      ref={ref}
+      tabIndex={-1}
+      role="alert"
+      className="rounded-3xl border border-risk-high/25 bg-white p-7 shadow-card focus:outline-none"
+    >
       <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-risk-high-bg text-risk-high">
         <Icon name="alert" className="h-5 w-5" />
       </span>

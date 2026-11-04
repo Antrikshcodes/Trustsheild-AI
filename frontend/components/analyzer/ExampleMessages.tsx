@@ -1,10 +1,9 @@
 "use client";
 
-import { Icon, type IconName } from "@/components/ui/Icon";
+import { CHANNEL_ICONS } from "@/components/analyzer/ChannelSelector";
+import { Icon } from "@/components/ui/Icon";
+import { CHANNELS } from "@/lib/constants";
 import { EXAMPLE_MESSAGES, type ExampleMessage } from "@/lib/examples";
-import type { Channel } from "@/types/analysis";
-
-const CHANNEL_ICON: Record<Channel, IconName> = { email: "mail", sms: "phone", whatsapp: "message", other: "list" };
 
 interface ExampleMessagesProps {
   onSelect: (example: ExampleMessage) => void;
@@ -28,8 +27,8 @@ export function ExampleMessages({ onSelect, disabled }: ExampleMessagesProps) {
               className="group flex h-full w-full flex-col items-start gap-2 rounded-2xl border border-line bg-white p-3.5 text-left transition-all hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lift disabled:pointer-events-none disabled:opacity-60"
             >
               <span className="flex w-full items-center gap-2 text-xs text-muted">
-                <Icon name={CHANNEL_ICON[ex.channel]} className="h-3.5 w-3.5" />
-                <span className="capitalize">{ex.channel === "sms" ? "SMS" : ex.channel === "whatsapp" ? "WhatsApp" : ex.channel}</span>
+                <Icon name={CHANNEL_ICONS[ex.channel]} className="h-3.5 w-3.5" />
+                <span>{CHANNELS.find((c) => c.value === ex.channel)?.label}</span>
                 <span className="ml-auto rounded-full bg-canvas px-2 py-0.5 font-medium text-ink-soft">{ex.tag}</span>
               </span>
               <span className="text-sm font-semibold text-ink">{ex.title}</span>

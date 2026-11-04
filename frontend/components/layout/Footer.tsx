@@ -17,19 +17,19 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3">
             <div>
               <p className="font-semibold text-ink">Product</p>
-              <ul className="mt-3 space-y-2 text-muted">
+              <ul className="mt-2 space-y-1 text-muted">
                 <li>
-                  <a className="hover:text-ink" href="#analyze">
+                  <a className="inline-block py-1 hover:text-ink" href="#analyze">
                     Check a message
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-ink" href="#how-it-works">
+                  <a className="inline-block py-1 hover:text-ink" href="#how-it-works">
                     How it works
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-ink" href="#features">
+                  <a className="inline-block py-1 hover:text-ink" href="#features">
                     Features
                   </a>
                 </li>
@@ -37,14 +37,14 @@ export function Footer() {
             </div>
             <div>
               <p className="font-semibold text-ink">Trust</p>
-              <ul className="mt-3 space-y-2 text-muted">
+              <ul className="mt-2 space-y-1 text-muted">
                 <li>
-                  <a className="hover:text-ink" href="#privacy">
+                  <a className="inline-block py-1 hover:text-ink" href="#privacy">
                     Privacy &amp; security
                   </a>
                 </li>
                 <li>
-                  <a className="hover:text-ink" href="#limitations">
+                  <a className="inline-block py-1 hover:text-ink" href="#limitations">
                     Limitations
                   </a>
                 </li>

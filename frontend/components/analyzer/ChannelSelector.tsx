@@ -5,7 +5,7 @@ import { CHANNELS } from "@/lib/constants";
 import { cn } from "@/lib/cn";
 import type { Channel } from "@/types/analysis";
 
-const ICONS: Record<Channel, IconName> = { email: "mail", sms: "phone", whatsapp: "message", other: "list" };
+export const CHANNEL_ICONS: Record<Channel, IconName> = { email: "mail", sms: "phone", whatsapp: "message", other: "list" };
 
 interface ChannelSelectorProps {
   value: Channel;
@@ -17,7 +17,7 @@ export function ChannelSelector({ value, onChange, disabled }: ChannelSelectorPr
   return (
     <fieldset disabled={disabled}>
       <legend className="mb-2 text-sm font-medium text-ink">Where did you receive it?</legend>
-      <div role="radiogroup" className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {CHANNELS.map((c) => {
           const active = value === c.value;
           return (
@@ -32,7 +32,7 @@ export function ChannelSelector({ value, onChange, disabled }: ChannelSelectorPr
               )}
             >
               <input type="radio" name="channel" value={c.value} checked={active} onChange={() => onChange(c.value)} className="sr-only" />
-              <Icon name={ICONS[c.value]} className="h-4 w-4" />
+              <Icon name={CHANNEL_ICONS[c.value]} className="h-4 w-4" />
               {c.label}
             </label>
           );

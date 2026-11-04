@@ -10,16 +10,10 @@ const STYLES: Record<RiskLevel, string> = {
 };
 
 /** Risk is always shown as text + icon, never colour alone. */
-export function RiskBadge({ level, size = "md" }: { level: RiskLevel; size?: "sm" | "md" }) {
+export function RiskBadge({ level }: { level: RiskLevel }) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-semibold ring-1 ring-inset",
-        STYLES[level],
-        size === "sm" ? "px-2.5 py-0.5 text-xs" : "px-3 py-1 text-sm",
-      )}
-    >
-      <Icon name={level === "low" ? "check" : "alert"} className={size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4"} />
+    <span className={cn("inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold ring-1 ring-inset", STYLES[level])}>
+      <Icon name={level === "low" ? "check" : "alert"} className="h-4 w-4" />
       {RISK_COPY[level].label}
     </span>
   );

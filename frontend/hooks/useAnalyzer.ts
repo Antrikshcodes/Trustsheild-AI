@@ -19,9 +19,13 @@ const INITIAL: AnalyzerState = { status: "idle", result: null, error: null, anal
 export function useAnalyzer() {
   const [state, setState] = useState<AnalyzerState>(INITIAL);
   const controllerRef = useRef<AbortController | null>(null);
+  // Ignores repeat submissions (e.g. fast double-clicks) while a check is already running.
+  // A ref, not state, so clicks that land before React re-renders the disabled button are caught too.
+  const inFlightRef = useRef(false);
 
   const analyze = useCallback(async (req: AnalyzeRequest) => {
-    controllerRef.current?.abort();
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
     const controller = new AbortController();
     controllerRef.current = controller;
 
@@ -39,11 +43,15 @@ export function useAnalyzer() {
       const message =
         err instanceof Error && !simulateError ? err.message : "We couldn’t analyse this message right now. Please try again.";
       setState((s) => ({ ...s, status: "error", error: message }));
+    } finally {
+      if (controllerRef.current === controller) inFlightRef.current = false;
     }
   }, []);
 
   const reset = useCallback(() => {
     controllerRef.current?.abort();
+    controllerRef.current = null;
+    inFlightRef.current = false;
     setState(INITIAL);
   }, []);
 

@@ -13,16 +13,24 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8
 
 export const isDemoMode = MODE === "demo";
 
+const UNAVAILABLE = "The analysis service is unavailable right now. Please try again shortly.";
+
 async function analyzeViaApi(req: AnalyzeRequest, signal?: AbortSignal): Promise<AnalysisResult> {
-  const res = await fetch(`${API_BASE_URL}/api/v1/analyze`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(req),
-    signal,
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE_URL}/api/v1/analyze`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req),
+      signal,
+    });
+  } catch {
+    // Network failure (offline, CORS, server down): show a friendly message, not "Failed to fetch".
+    throw new Error(UNAVAILABLE);
+  }
   if (res.status === 422) throw new Error("The message couldn’t be accepted. Check its length and try again.");
   if (res.status === 429) throw new Error("Too many checks in a short time. Please wait a minute and try again.");
-  if (!res.ok) throw new Error("The analysis service is unavailable right now. Please try again shortly.");
+  if (!res.ok) throw new Error(UNAVAILABLE);
   return (await res.json()) as AnalysisResult;
 }
 

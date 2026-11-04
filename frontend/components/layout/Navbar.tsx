@@ -44,12 +44,12 @@ export function Navbar() {
           <Logo />
         </a>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
           {LINKS.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+              className="rounded-lg px-3 py-2 text-sm font-medium whitespace-nowrap text-ink-soft transition-colors hover:text-ink"
             >
               {l.label}
             </a>
@@ -64,7 +64,7 @@ export function Navbar() {
           </span>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -76,7 +76,7 @@ export function Navbar() {
       </Container>
 
       {open && (
-        <nav id="mobile-nav" aria-label="Mobile" className="border-t border-line bg-white md:hidden">
+        <nav id="mobile-nav" aria-label="Mobile" className="border-t border-line bg-white lg:hidden">
           <Container className="flex flex-col py-3">
             {LINKS.map((l) => (
               <a

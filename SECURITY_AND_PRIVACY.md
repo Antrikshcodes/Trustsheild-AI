@@ -28,6 +28,8 @@ Owners: Darsh + Kushagri
 that a message is genuine or fraudulent. Verify important opportunities independently through official
 channels. Never share passwords, OTPs or payment credentials."
 
-## Known issue
-`npm audit` reports a high-severity advisory in the PostCSS copy bundled inside `next` (build-time only;
-not reachable from user input). Fix requires a Next major upgrade — revisit before deployment.
+## Known issues
+- Fixed 2026-11-04: the high-severity PostCSS advisory bundled inside `next` is resolved with an npm `overrides`
+  entry (`postcss ^8.5.32`). `npm audit --omit=dev` reports 0 vulnerabilities.
+- Remaining: 14 moderate advisories in **dev-only** ESLint tooling (`minimatch` ReDoS). Not shipped to users;
+  the suggested fix is a breaking ESLint-config downgrade, so it is deferred.
